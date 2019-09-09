@@ -57,11 +57,11 @@ int main()
 void *inserir(void *pBuffer)
 {
 
-  pBuffer = realloc(pBuffer, 12 + (14 * ((*(int *)pBuffer) + 1)));
+  pBuffer = realloc(pBuffer, (3*sizeof(int)) + (((10*sizeof(char))+sizeof(int)) * ((*(int *)pBuffer) + 1)));
   printf("Informe o nome: ");
-  scanf("%s", (char *)(pBuffer + (12 + (*(int *)pBuffer) * 14)));
+  scanf("%s", (char *)(pBuffer + (3*sizeof(int) + (*(int *)pBuffer) * (10*sizeof(char)+sizeof(int)))));
   printf("Informe o numero: ");
-  scanf("%d", (int *)(pBuffer + (12 + (*(int *)pBuffer) * 14) + 10));
+  scanf("%d", (int *)(pBuffer + (3*sizeof(int) + ((*(int *)pBuffer) * (10*sizeof(char)+sizeof(int))) + (10*sizeof(char)))));
   *(int *)pBuffer = *(int *)pBuffer + 1;
 
   return pBuffer;
@@ -69,37 +69,37 @@ void *inserir(void *pBuffer)
 void buscar(void *pBuffer, char *busca)
 {
 
-  for (*(int *)(pBuffer + 4) = 0; *(int *)(pBuffer + 4) < *(int *)pBuffer; *(int *)(pBuffer + 4) = *(int *)(pBuffer + 4) + 1)
+  for (*(int *)(pBuffer + (sizeof(int))) = 0; *(int *)(pBuffer + (sizeof(int))) < *(int *)pBuffer; *(int *)(pBuffer + (sizeof(int))) = *(int *)(pBuffer + (sizeof(int))) + 1)
   {
-    if (strcmp((pBuffer + (12 + (14 * *(int *)(pBuffer + 4)))), busca) == 0)
+    if (strcmp((pBuffer + ((3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * *(int *)(pBuffer + (sizeof(int)))))), busca) == 0)
     {
-      printf("Nome: %s\n", (char *)(pBuffer + (12 + (14 * *(int *)(pBuffer + 4)))));
-      printf("Telefone: %d\n", *(int *)(pBuffer + (10 + 12 + (14 * *(int *)(pBuffer + 4)))));
+      printf("Nome: %s\n", (char *)(pBuffer + ((3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * *(int *)(pBuffer + (sizeof(int)))))));
+      printf("Telefone: %d\n", *(int *)(pBuffer + ((10*sizeof(char)) + (3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * *(int *)(pBuffer + (sizeof(int)))))));
     }
   }
 }
 void listar(void *pBuffer)
 {
 
-  for (*(int *)(pBuffer + 4) = 0; *(int *)(pBuffer + 4) < *(int *)pBuffer; *(int *)(pBuffer + 4) = *(int *)(pBuffer + 4) + 1)
+  for (*(int *)(pBuffer + (sizeof(int))) = 0; *(int *)(pBuffer + (sizeof(int))) < *(int *)pBuffer; *(int *)(pBuffer + (sizeof(int))) = *(int *)(pBuffer + (sizeof(int))) + 1)
   {
-    printf("Nome: %s\n", (char *)(pBuffer + (12 + (14 * *(int *)(pBuffer + 4)))));
-    printf("Telefone: %d\n", *(int *)(pBuffer + (10 + 12 + (14 * *(int *)(pBuffer + 4)))));
+    printf("Nome: %s\n", (char *)(pBuffer + ((3*sizeof(int)) + ( ((10*sizeof(char))+(sizeof(int))) * *(int *)(pBuffer + (sizeof(int)))))));
+    printf("Telefone: %d\n", *(int *)(pBuffer + ((10*sizeof(char)) + (3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * *(int *)(pBuffer + (sizeof(int)))))));
   }
 }
 void *apagar(void *pBuffer, char *busca)
 {
 
-  for (*(int *)(pBuffer + 4) = 0; strcmp((pBuffer + (12 + (14 * *(int *)(pBuffer + 4)))), busca) != 0; *(int *)(pBuffer + 4) = *(int *)(pBuffer + 4) + 1)
+  for (*(int *)(pBuffer + (sizeof(int))) = 0; strcmp((pBuffer + ((3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * *(int *)(pBuffer + (sizeof(int)))))), busca) != 0; *(int *)(pBuffer + (sizeof(int))) = *(int *)(pBuffer + (sizeof(int))) + 1)
   {
   }
-  for (*(int *)(pBuffer + 4) = *(int *)(pBuffer + 4); *(int *)(pBuffer + 4) < *(int *)pBuffer; *(int *)(pBuffer + 4) = *(int *)(pBuffer + 4) + 1)
+  for (*(int *)(pBuffer + (sizeof(int))) = *(int *)(pBuffer + (sizeof(int))); *(int *)(pBuffer + (sizeof(int))) < *(int *)pBuffer; *(int *)(pBuffer + (sizeof(int))) = *(int *)(pBuffer + (sizeof(int))) + 1)
   {
-    strcpy((char *)(pBuffer + (12 + (14 * *(int *)(pBuffer + 4)))), (char *)(pBuffer + (12 + (14 * (1 + *(int *)(pBuffer + 4))))));
-    *(int *)(pBuffer + (10 + 12 + (14 * *(int *)(pBuffer + 4)))) = *(int *)(pBuffer + (10 + 12 + (14 * (1 + *(int *)(pBuffer + 4)))));
+    strcpy((char *)(pBuffer + ((3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * *(int *)(pBuffer + (sizeof(int)))))), (char *)(pBuffer + ((3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * (1 + *(int *)(pBuffer + (sizeof(int))))))));
+    *(int *)(pBuffer + ((10*sizeof(char)) + (3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * *(int *)(pBuffer + (sizeof(int)))))) = *(int *)(pBuffer + ((10*sizeof(char)) + (3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * (1 + *(int *)(pBuffer + (sizeof(int)))))));
   }
   *(int *)pBuffer = *(int *)pBuffer - 1;
-  pBuffer = realloc(pBuffer, 12 + (14 * ((*(int *)pBuffer))));
+  pBuffer = realloc(pBuffer, (3*sizeof(int)) + (((10*sizeof(char))+(sizeof(int))) * ((*(int *)pBuffer))));
 
   return pBuffer;
 }
