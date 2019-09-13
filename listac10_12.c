@@ -46,5 +46,6 @@ int main()
     }
     printf("O produto de maior preco e %s\n", lista_produtos[imaior].nome);
     printf("O produto de menor preco e %s\n", lista_produtos[imenor].nome);
+    free(lista_produtos);
     return 0;
 }
