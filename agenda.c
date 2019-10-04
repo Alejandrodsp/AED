@@ -6,6 +6,7 @@ void buscar(void *pBuffer);
 void listar(void *pBuffer);
 void *apagar(void *pBuffer);
 void insertion(void *pBuffer);
+void selection(void *pBuffer);
 int main()
 {
   void *pBuffer;
@@ -21,7 +22,8 @@ int main()
     printf("3)Apagar\n");
     printf("4)Listar\n");
     printf("5)Insertion Sort\n");
-    printf("6)Sair\n");
+    printf("6)Selection Sort\n");
+    printf("7)Sair\n");
     scanf("%d", (int *)(pBuffer + (3 * sizeof(int))));
     switch (*(int *)(pBuffer + (3 * sizeof(int))))
     {
@@ -41,6 +43,9 @@ int main()
       insertion(pBuffer);
       break;
     case 6:
+      selection(pBuffer);
+      break;
+    case 7:
       free(pBuffer);
       exit(0);
       break;
@@ -121,5 +126,44 @@ void insertion(void *pBuffer)
     }
     strcpy((char *)(pBuffer + ((5 * sizeof(int)) + (10 * (sizeof(char))) + (((10 * sizeof(char)) + (sizeof(int))) * ((*(int *)(pBuffer + (2 * sizeof(int)))) + 1)))), (char *)(pBuffer + (4 * sizeof(int))));
     *(int *)(pBuffer + (10 + (5 * sizeof(int)) + (10 * (sizeof(char))) + (((10 * sizeof(char)) + (sizeof(int))) * ((*(int *)(pBuffer + (2 * sizeof(int)))) + 1)))) = *(int *)(pBuffer + (10 + (4 * sizeof(int))));
+  }
+}
+void selection(void *pBuffer)
+{
+  //vou usar a variavel de controle switch para armazenar o min id
+  for (*(int *)(pBuffer + (sizeof(int))) = 0; *(int *)(pBuffer + (sizeof(int))) < (*(int *)pBuffer) - 1; *(int *)(pBuffer + (sizeof(int))) = *(int *)(pBuffer + (sizeof(int))) + 1)
+  {
+
+    *(int *)(pBuffer + (3 * sizeof(int))) = *(int *)(pBuffer + (sizeof(int)));
+    for (*(int *)(pBuffer + (2 * sizeof(int))) = *(int *)(pBuffer + (sizeof(int))) + 1; *(int *)(pBuffer + (2 * sizeof(int))) < *(int *)pBuffer; *(int *)(pBuffer + (2 * sizeof(int))) = *(int *)(pBuffer + (2 * sizeof(int))) + 1)
+    {
+      if (strcmp((char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) +
+                                     (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (2 * sizeof(int)))))),
+                 (char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) +
+                                     (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (3 * sizeof(int))))))) < 0)
+      {
+
+        *(int *)(pBuffer + (3 * sizeof(int))) = *(int *)(pBuffer + (2 * sizeof(int)));
+      }
+    }
+
+    strcpy((char *)(pBuffer + (4 * sizeof(int))), (char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) +
+                                                                      (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (3 * sizeof(int)))))));
+
+    *(int *)(pBuffer + (10 * sizeof(char) + 4 * sizeof(int))) = *(int *)(pBuffer + (10 + (5 * sizeof(int)) + (10 * sizeof(char)) +
+                                                                                    (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (3 * sizeof(int))))));
+    strcpy((char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) +
+                               (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (3 * sizeof(int)))))),
+           (char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) +
+                               (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int)))))));
+    *(int *)(pBuffer + (10 + (5 * sizeof(int)) + (10 * sizeof(char)) +
+                        (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (3 * sizeof(int)))))) = *(int *)(pBuffer + (10 + (5 * sizeof(int)) + (10 * sizeof(char)) +
+                                                                                                                            (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int))))));
+
+    strcpy((char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) +
+                               (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int)))))),
+           (char *)(pBuffer + (4 * sizeof(int))));
+    *(int *)(pBuffer + (10 + (5 * sizeof(int)) + (10 * sizeof(char)) +
+                        (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int)))))) = *(int *)(pBuffer + (10 * sizeof(char) + 4 * sizeof(int)));
   }
 }
