@@ -8,6 +8,7 @@ void *apagar(void *pBuffer);
 void insertion(void *pBuffer);
 void selection(void *pBuffer);
 void bubble(void *pBuffer);
+void quick(void *pBuffer,int left,int right);
 int main()
 {
   void *pBuffer;
@@ -25,7 +26,8 @@ int main()
     printf("5)Insertion Sort\n");
     printf("6)Selection Sort\n");
     printf("7)Bubble Sort\n");
-    printf("8)Sair\n");
+    printf("8)Quick Sort\n");
+    printf("9)Sair\n");
     scanf("%d", (int *)(pBuffer + (3 * sizeof(int))));
     switch (*(int *)(pBuffer + (3 * sizeof(int))))
     {
@@ -51,6 +53,9 @@ int main()
       bubble(pBuffer);
       break;
     case 8:
+      quick(pBuffer,0,*(int*)pBuffer);
+      break;
+    case 9:
       free(pBuffer);
       exit(0);
       break;
@@ -202,4 +207,35 @@ void bubble(void *pBuffer)
       }
     }
   }
+}
+void quick(void *pBuffer,int left,int right){
+   srand(time(NULL));
+*(int *)(pBuffer + (sizeof(int))) = left;
+*(int *)(pBuffer + (2 * sizeof(int))) = right;
+*(int *)(pBuffer + (4 * sizeof(int))) = rand() % (left-right); //Usando aleatorio como pivo e armazenando na parte da opcao switch
+do{
+  while(strcmp((char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int)))))),(char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) +(10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (4 * sizeof(int)))))))<0)
+  *(int *)(pBuffer + (sizeof(int))) = *(int *)(pBuffer + (sizeof(int))) + 1;
+  
+  while(strcmp((char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (4*sizeof(int)))))),(char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) +(10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (2 * sizeof(int)))))))<0)
+*(int *)(pBuffer + (2 * sizeof(int))) = *(int *)(pBuffer + (2 * sizeof(int))) - 1;
+
+if(*(int *)(pBuffer + (sizeof(int)))<=*(int *)(pBuffer + (2 * sizeof(int)))){
+strcpy((char *)(pBuffer + (4 * sizeof(int))),(char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int)))))));
+*(int *)(pBuffer + (4 * sizeof(int) + 10))=*(int *)(pBuffer + (10+(5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int))))));
+strcpy((char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int)))))),(char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (2*sizeof(int)))))));
+*(int *)(pBuffer + (10+(5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (sizeof(int))))))=*(int *)(pBuffer + (10+(5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (2*sizeof(int))))));
+strcpy((char *)(pBuffer + ((5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (2*sizeof(int)))))),(char *)(pBuffer + (4 * sizeof(int))));
+*(int *)(pBuffer + (10+(5 * sizeof(int)) + (10 * sizeof(char)) + (10 * sizeof(char) + sizeof(int)) * (*(int *)(pBuffer + (2*sizeof(int))))))=*(int *)(pBuffer + (4 * sizeof(int) + 10));
+*(int *)(pBuffer + (sizeof(int)))= *(int *)(pBuffer + (sizeof(int))) + 1;
+*(int *)(pBuffer + (2 * sizeof(int))) = *(int *)(pBuffer + (2 * sizeof(int))) - 1;
+}
+}while(*(int *)(pBuffer + (sizeof(int)))<=*(int *)(pBuffer + (2 * sizeof(int))));
+if(left<*(int *)(pBuffer + (2 * sizeof(int)))){
+  quick(pBuffer,left,*(int *)(pBuffer + (2 * sizeof(int))));
+}
+if(*(int *)(pBuffer + (sizeof(int)))<right){
+  quick(pBuffer,*(int *)(pBuffer + (sizeof(int))),right);
+}
+
 }
